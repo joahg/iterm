@@ -19,9 +19,8 @@ Run the install script to set up everything automatically:
 ```
 
 This will:
-1. Copy preferences to `~/Library/Preferences/`
-2. Install the profile as a Dynamic Profile
-3. Merge global key bindings into your preferences
+1. Copy preferences to `~/Library/Preferences/` (includes the profile)
+2. Merge global key bindings into your preferences
 
 **Note:** Quit iTerm2 before running the install script.
 
@@ -38,7 +37,9 @@ cp com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 
 ### 2. Profile (profile.json)
 
-**Option A: Dynamic Profiles (Recommended)**
+The profile is already included in `com.googlecode.iterm2.plist`. Use `profile.json` only if you want to import just the profile without other settings.
+
+**Option A: Dynamic Profiles (for profile-only install)**
 
 Dynamic Profiles require the profile to be wrapped in a `"Profiles"` array:
 
@@ -54,7 +55,7 @@ with open('$HOME/Library/Application Support/iTerm2/DynamicProfiles/profile.json
 "
 ```
 
-The profile will appear automatically when iTerm2 starts. To set it as default, go to Preferences → Profiles, select the profile, and click "Other Actions" → "Set as Default".
+**Note:** Do not use Dynamic Profiles if you've already installed the full plist—they share the same GUID and will conflict.
 
 **Option B: Manual Import**
 

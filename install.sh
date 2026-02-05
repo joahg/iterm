@@ -19,19 +19,8 @@ echo "→ Installing preferences..."
 cp "$SCRIPT_DIR/com.googlecode.iterm2.plist" ~/Library/Preferences/com.googlecode.iterm2.plist
 echo "  ✓ Copied to ~/Library/Preferences/"
 
-# Install profile via Dynamic Profiles
-echo "→ Installing profile..."
-mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles
-# Dynamic Profiles require a "Profiles" array wrapper
-python3 -c "
-import json
-with open('$SCRIPT_DIR/profile.json') as f:
-    profile = json.load(f)
-wrapped = {'Profiles': [profile]}
-with open('$HOME/Library/Application Support/iTerm2/DynamicProfiles/profile.json', 'w') as f:
-    json.dump(wrapped, f, indent=2)
-"
-echo "  ✓ Installed to ~/Library/Application Support/iTerm2/DynamicProfiles/"
+# Note: profile.json is included in the plist, so no need to install it separately
+# Dynamic Profiles are only needed if installing the profile without the full plist
 
 # Install key bindings
 echo "→ Installing key bindings..."
