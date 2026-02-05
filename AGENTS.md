@@ -19,9 +19,18 @@ cp com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 ```
 
 ### Profile (Dynamic Profiles method - no UI required)
+Dynamic Profiles require a `"Profiles"` array wrapper. The raw profile.json must be wrapped:
+
 ```bash
 mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles
-cp profile.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/
+python3 -c "
+import json
+with open('profile.json') as f:
+    profile = json.load(f)
+wrapped = {'Profiles': [profile]}
+with open('$HOME/Library/Application Support/iTerm2/DynamicProfiles/profile.json', 'w') as f:
+    json.dump(wrapped, f, indent=2)
+"
 ```
 
 ### Key Bindings (scripted - no UI required)

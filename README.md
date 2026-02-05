@@ -40,11 +40,18 @@ cp com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 
 **Option A: Dynamic Profiles (Recommended)**
 
-Place in the DynamicProfiles folder for automatic loading:
+Dynamic Profiles require the profile to be wrapped in a `"Profiles"` array:
 
 ```bash
 mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles
-cp profile.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/
+python3 -c "
+import json
+with open('profile.json') as f:
+    profile = json.load(f)
+wrapped = {'Profiles': [profile]}
+with open('$HOME/Library/Application Support/iTerm2/DynamicProfiles/profile.json', 'w') as f:
+    json.dump(wrapped, f, indent=2)
+"
 ```
 
 The profile will appear automatically when iTerm2 starts. To set it as default, go to Preferences → Profiles, select the profile, and click "Other Actions" → "Set as Default".
