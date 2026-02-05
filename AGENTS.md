@@ -38,8 +38,9 @@ mappings = data.get('Key Mappings', {})
 with open('/tmp/globalkeymap.json', 'w') as f:
     json.dump(mappings, f)
 "
-# Merge into existing preferences
-defaults write com.googlecode.iterm2 GlobalKeyMap "$(cat /tmp/globalkeymap.json)"
+# Convert JSON to XML plist format and merge into preferences
+plutil -convert xml1 -o /tmp/globalkeymap.plist /tmp/globalkeymap.json
+defaults write com.googlecode.iterm2 GlobalKeyMap "$(cat /tmp/globalkeymap.plist)"
 ```
 
 ## Notes
