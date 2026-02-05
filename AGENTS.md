@@ -4,22 +4,38 @@ This repository contains iTerm2 configuration files. Here's how to work with the
 
 ## File Locations
 
-| File | Destination | Method |
-|------|-------------|--------|
-| `com.googlecode.iterm2.plist` | `~/Library/Preferences/com.googlecode.iterm2.plist` | Direct copy (quit iTerm2 first) |
-| `profile.json` | `~/Library/Application Support/iTerm2/DynamicProfiles/` | Copy for auto-load |
-| `key-bindings.itermkeymap` | Merged into preferences | Use defaults command |
+| File | Purpose |
+|------|---------|
+| `com.googlecode.iterm2.plist` | Complete iTerm2 preferences (includes profiles, key bindings, all settings) |
+| `profile.json` | Standalone profile export (for profile-only installs) |
+| `key-bindings.itermkeymap` | Global keyboard shortcut presets |
+| `install.sh` | Automated install script |
 
-## Installation Commands
+## Quick Install
 
-### Full Preferences
+```bash
+# Quit iTerm2 first, then run:
+./install.sh
+```
+
+## Manual Installation Commands
+
+### Option 1: Full Preferences (Recommended)
+
+This installs everything - preferences, profiles, and key bindings:
+
 ```bash
 # User must quit iTerm2 first
 cp com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 ```
 
-### Profile (Dynamic Profiles method - no UI required)
-Dynamic Profiles require a `"Profiles"` array wrapper. The raw profile.json must be wrapped:
+**Note:** The plist already contains the profile, so no additional profile installation is needed.
+
+### Option 2: Profile Only (Dynamic Profiles)
+
+Use this ONLY if you want to install just the profile without replacing other preferences. Do NOT use if you've already installed the full plist (same GUID will conflict).
+
+Dynamic Profiles require a `"Profiles"` array wrapper:
 
 ```bash
 mkdir -p ~/Library/Application\ Support/iTerm2/DynamicProfiles
@@ -33,8 +49,9 @@ with open('$HOME/Library/Application Support/iTerm2/DynamicProfiles/profile.json
 "
 ```
 
-### Key Bindings (scripted - no UI required)
-The `.itermkeymap` file contains a JSON object with `Key Mappings`. To apply without UI:
+### Option 3: Key Bindings Only
+
+To merge key bindings without replacing other preferences:
 
 ```bash
 # Extract Key Mappings and write to GlobalKeyMap in defaults
